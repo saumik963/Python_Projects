@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}Confirm{% endblock %}
+{% block body %}
+
+
+<div style="width:50%; margin:auto;">
+    <h1>Sure you want to delete?</h1>
+<form method="POST">
+    {% csrf_token %} 
+    {{form}}
+    <button type="submit" class="btn btn-outline-danger">Yes</button>
+    <a href='{% url 'show' %}' class="btn btn-outline-info">No</a>
+</form>
+</div>
+
+{% endblock %}
