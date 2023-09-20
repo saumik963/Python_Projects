@@ -1,0 +1,9 @@
+Create a library management system where-
+
+User can create a new account with email and password
+User can login and logout
+User can borrow books and return books 
+User can check available books
+Admin can login and logout
+Admin can add new books
+Admin can check available books
