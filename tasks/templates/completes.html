@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% block title %}Completed Task{% endblock %}
+{% block body %}
+
+
+
+
+<div class="row">
+    <div class="col-12">
+      <div class="card card-margin">
+        <div class="card-body">
+          <div class="row search-body">
+            <div class="col-lg-12">
+              <div class="search-result">
+                <div class="result-header">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="records">Showing: <b>{{tasks.count}}</b> result</div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="result-actions">
+                        <div class="result-sorting">
+
+                          <form class="form-inline mt-3" method="GET">
+                            <div class="form-group mr-2">
+                                <label class="mr-2">Sort By Priority:</label>
+                                <select class="form-control" id="exampleOption" name="sorting_option">
+                                    <option value="">------</option>
+                                    <option value="1">Low to High</option>
+                                    <option value="3">High to Low</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sort</button>
+                        </form>   
+                          
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="result-body">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead class="thead-dark">
+                        <tr>
+                          <th scope="col">No</th>
+                          <th scope="col">Title</th>
+                          <th scope="col">Description</th>
+                          <th scope="col">Priority</th>
+                          <th scope="col">Update At</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Option</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for task in tasks %}
+                        <tr>
+                          <th scope="row">{{ forloop.counter }}</th>
+
+                          
+
+                          <td>
+                            <a href='{%url 'detail' pk=task.id %}'>
+                            {{task.taskTitle}}
+                          </a>
+                          </td>
+
+                        
+
+                          <td>{{task.taskDescription}}</td>
+                          <td>
+                            
+                            {% if task.Priority == 1 %}
+                            Low
+                        {% elif task.Priority == 2 %}
+                            Medium
+                        {% elif task.Priority == 3 %}
+                            High
+                        {% endif %}
+                        
+                          </td>
+                          <td>{{task.update_at}}</td>
+                          <td>
+                            {% if task.is_completed %}
+                            <span class="material-icons">
+                            task
+                            </span> 
+                            {% else %} 
+                             <span class="material-icons">
+                              disabled_by_default
+                              </span>
+                              {% endif %}
+                            </td>
+
+
+                          <td>
+                            <a href='{%url 'Delete' pk=task.id %}'>
+                            <span class="material-icons">
+                            delete_forever
+                            </span>
+                          </a>
+
+                          <a href='{%url 'Update' pk=task.id %}'>
+                          <span class="material-icons">
+                              edit_note
+                              </span>  
+                          </a>
+                              
+                              <a href='{%url 'task_complete' id=task.id %}'>
+                              <span class="material-icons">
+                                task_alt
+                                </span> </a> </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+          <nav class="d-flex justify-content-center">
+            {% if tasks.has_other_pages %}
+            <ul class="pagination pagination-base pagination-boxed pagination-square mb-0">
+              {% if tasks.has_previous %}
+              <li class="page-item">
+                <a class="page-link no-border" href="?page={{tasks.previous_page_number}}">
+                  <span aria-hidden="true">«</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link no-border" href="#">
+                  <span aria-hidden="true">«</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              
+              {% endif %}
+
+              {% for i in tasks.paginator.page_range %} 
+              {% if tasks.number == i %}
+
+              <li class="page-item active"><a class="page-link no-border" href="#">{{i}}</a></li>
+              
+              {% else %}
+              <li class="page-item"><a class="page-link no-border" href="?page={{i}}">{{i}}</a></li>
+              {% endif %}
+              {% endfor %}
+
+              {% if tasks.has_next %}
+              <li class="page-item">
+                <a class="page-link no-border" href="?page={{tasks.next_page_number}}">
+                  <span aria-hidden="true">»</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+              {% else %}
+              <li class="page-item disabled">
+                <a class="page-link no-border" href="#">
+                  <span aria-hidden="true">»</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            {% endif %}
+
+            </ul>
+            {% endif %}
+          </nav>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %}

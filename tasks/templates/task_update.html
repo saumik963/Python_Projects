@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Tasks Update{% endblock %}
+{% block body %}
+
+<div class="col-12">
+    <div class="card card-margin">
+      <div class="card-body">
+
+        <form method="POST">
+          {% csrf_token %}
+          <div class="form-group">
+              <label for="id_taskTitle">Update Task</label>
+              <input type="text" name="taskTitle" id="id_taskTitle" class="form-control" value="{{ form.instance.taskTitle }}" placeholder="Enter Task Title">
+          </div>
+          <div class="form-group">
+              <label for="id_taskDescription">Description</label>
+              <textarea name="taskDescription" class="form-control" id="id_taskDescription" required>{{ form.instance.taskDescription }}</textarea>
+          </div>
+          <div class="form-group">
+              <label for="id_Priority">Priority</label>
+              <select name="Priority" id="id_Priority" class="form-control" required>
+                  <option value="1" {% if form.instance.Priority == 1 %}selected{% endif %}>Low</option>
+                  <option value="2" {% if form.instance.Priority == 2 %}selected{% endif %}>Medium</option>
+                  <option value="3" {% if form.instance.Priority == 3 %}selected{% endif %}>High</option>
+              </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Update</button>
+      </form>
+      
+      </div>
+    </div>
+  </div>
+
+
+  {% endblock %}
